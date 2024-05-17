@@ -1,0 +1,104 @@
+{% include 'inicio.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    {% load static %}
+    <script src="{% static 'js/app.js' %}"></script>
+    <title>Listar Peliculas</title>
+    
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: #16213e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h3 {
+            color: #9d4edd;
+        }
+        .table {
+            color: #e0e0e0;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .table th {
+            background-color: #9d4edd;
+            color: #e0e0e0;
+        }
+        .table td {
+            background-color: #0f3460;
+        }
+        .fa-edit, .fa-trash {
+            cursor: pointer;
+        }
+        .fa-edit:hover {
+            color: #ffd700;
+        }
+        .fa-trash:hover {
+            color: #ff4500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container w-75 mt-5">
+        <div style="margin: 0 auto">
+            <h3 class="text-center">LISTADO DE PELICULAS</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="text-center fw-bold">
+                        <th>Código</th>
+                        <th>Título</th>
+                        <th>Protagonista</th>
+                        <th>Duración</th>
+                        <th>Resumen</th>
+                        <th>Foto</th>
+                        <th>Genero</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in peliculas %}
+                    <tr>
+                        <td>{{p.pelCodigo}}</td>
+                        <td>{{p.pelTitulo}}</td>
+                        <td>{{p.pelProtagonista}}</td>
+                        <td>{{p.pelDuracion}}</td>
+                        <td>{{p.pelResumen}}</td>
+                        <td class="text-center">
+                            <img src="../media/{{p.pelFoto}}" alt="" width="50" height="50">
+                        </td>
+                        <td>{{p.pelGenero.genNombre}}</td>
+                        <td class="text-center">
+                            <a href="/consultarPelicula/{{p.pk}}/"> 
+                                <i class="fa fa-edit text-warning" title="editar"></i>
+                            </a>
+                            <i class="fa fa-trash text-danger" title="eliminar" onclick="eliminarPelicula('{{p.pk}}')"></i>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

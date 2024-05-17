@@ -1,0 +1,102 @@
+{% include 'inicio.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: #16213e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h3 {
+            color: #9d4edd;
+        }
+        .form-control, .form-select {
+            background-color: #0f3460;
+            border: none;
+            color: #e0e0e0;
+        }
+        .form-control::placeholder {
+            color: #a1a1a1;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #9d4edd;
+            box-shadow: 0 0 5px rgba(157, 78, 221, 0.5);
+        }
+        label {
+            color: #e0e0e0;
+        }
+        .btn-secondary {
+            background-color: #9d4edd;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #7a3eb2;
+        }
+        .btn-secondary:focus {
+            box-shadow: 0 0 5px rgba(157, 78, 221, 0.5);
+        }
+    </style>
+</head>
+
+{% block container %}
+    
+    <div class="container w-50 mt-5">
+        <h3 class="text-center">AGREGAR PELICULA</h3>
+        <form action="/agregarPelicula/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="txtCodigo" class="fw-bold">Código:</label>
+                <input type="text" name="txtCodigo" id="txtCodigo" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="txtTitulo" class="fw-bold">Título:</label>
+                <input type="text" name="txtTitulo" id="txtTitulo" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="txtProtagonista" class="fw-bold">Protagonista:</label>
+                <input type="text" name="txtProtagonista" id="txtProtagonista" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="txtDuracion" class="fw-bold">Duración:</label>
+                <input type="number" name="txtDuracion" id="txtDuracion" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="txtResumen" class="fw-bold">Resumen:</label>
+                <textarea name="txtResumen" id="txtResumen" cols="30" rows="5" class="form-control"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="cbGenero" class="fw-bold">Genero:</label>
+                <select name="cbGenero" id="cbGenero" class="form-select">
+                    <option value="">Seleccione</option>
+                    {% for g in generos %}
+                        <option value="{{g.pk}}">{{g.genNombre}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="fileFoto" class="fw-bold">Foto:</label>
+                <input type="file" name="fileFoto" id="fileFoto" class="form-control">
+            </div>
+            <div class="mb-3 text-center">
+                <button class="btn btn-secondary">Agregar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="text-center mt-3">{{mensaje}}</div>
+{% endblock %}
+
+</html>
